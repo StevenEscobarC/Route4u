@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "773511517212",
+    "project_id": "route4u-a5f71",
+    "storage_bucket": "route4u-a5f71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773511517212:android:72100b416de14ad00ebbd9",
+        "android_client_info": {
+          "package_name": "com.example.route4you"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773511517212-hq45k3jeb4msq0iip0en1epdtin2du24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.route4you",
+            "certificate_hash": "e1b7ccd058c18e3e0448cd7df5d56d4277643fbe"
+          }
+        },
+        {
+          "client_id": "773511517212-l89nor5nte295efnqdvbvul9k9fn53k9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBYkr45PYnIBHyiL3ke1gKS-F1vUE-KLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773511517212-l89nor5nte295efnqdvbvul9k9fn53k9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
