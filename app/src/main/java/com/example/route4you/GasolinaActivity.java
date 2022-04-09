@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.route4you.Model.TipoGasolina;
+import com.example.route4you.model.TipoGasolina;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,30 +25,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
+/**
+ * Clase donde se define la estructura del formulario de tipo de gasolina
+ *
+ * @author Legions
+ * @version 1.0
+ */
 public  class GasolinaActivity extends AppCompatActivity {
     private List<TipoGasolina> listTipoGasolina = new ArrayList<TipoGasolina>();
     ArrayAdapter<TipoGasolina> arrayAdapterTipoGasolina;
 
     EditText nombreTipoGasolina;
-    ListView list_tipo_gasolina;
+    ListView listViewTipoGasolina;
+
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
     TipoGasolina selectedTipoGasolina;
+
+    /**
+     * Se crea el formulario
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gasolina);
 
         nombreTipoGasolina = findViewById(R.id.txt_nombreTipoGasolina);
-        list_tipo_gasolina = findViewById(R.id.lv_datosTipoGasolina);
+        listViewTipoGasolina = findViewById(R.id.lv_datosTipoGasolina);
 
         initFirebase();
 
         listarDatosTiposGasolina();
 
-        list_tipo_gasolina.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewTipoGasolina.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 selectedTipoGasolina = (TipoGasolina) parent.getItemAtPosition(position);
@@ -56,6 +70,12 @@ public  class GasolinaActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Se crea el menu de la parte superior de la app
+     * @param menu
+     * @return la creacion del menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -72,14 +92,12 @@ public  class GasolinaActivity extends AppCompatActivity {
                     listTipoGasolina.add(tg);
 
                     arrayAdapterTipoGasolina = new ArrayAdapter<TipoGasolina>(GasolinaActivity.this, android.R.layout.simple_list_item_1, listTipoGasolina);
-                    list_tipo_gasolina.setAdapter(arrayAdapterTipoGasolina);
+                    listViewTipoGasolina.setAdapter(arrayAdapterTipoGasolina);
                 }
             }
 
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }
@@ -92,7 +110,11 @@ public  class GasolinaActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Realiza la accion dependiendo del boton escogido en el menu superior
+     * @param item boton escogido
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         String nombre = nombreTipoGasolina.getText().toString();
@@ -133,6 +155,9 @@ public  class GasolinaActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Resetea los campos del formulario
+     */
     private void limpiarCajas() {
         nombreTipoGasolina.setText("");
     }

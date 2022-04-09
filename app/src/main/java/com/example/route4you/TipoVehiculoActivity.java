@@ -25,12 +25,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
+/**
+ * Clase donde se define la estructura del formulario de tipo de vehiculo
+ *
+ * @author Legions
+ * @version 1.0
+ */
 public class TipoVehiculoActivity extends AppCompatActivity {
     private List<TipoVehiculo> listTipoVehiculo = new ArrayList<TipoVehiculo>();
     ArrayAdapter<TipoVehiculo> arrayAdapterTipoVehiculo;
 
     EditText nombreTipoVehiculo, añoTipoVehiculo;
-    ListView list_tipo_vehiculo;
+    ListView listViewTipoVehiculo;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -38,7 +45,11 @@ public class TipoVehiculoActivity extends AppCompatActivity {
     TipoVehiculo selectedTipoVehiculo;
 
 
-
+    /**
+     * Se crea el formulario
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +57,13 @@ public class TipoVehiculoActivity extends AppCompatActivity {
 
         nombreTipoVehiculo = findViewById(R.id.txt_nombreTipoVehiculo);
         añoTipoVehiculo = findViewById(R.id.txt_añoTipoVehiculo);
-        list_tipo_vehiculo = findViewById(R.id.lv_datosTipoVehiculo);
+        listViewTipoVehiculo = findViewById(R.id.lv_datosTipoVehiculo);
 
         initFirebase();
 
         listarDatosTiposvehiculo();
 
-        list_tipo_vehiculo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewTipoVehiculo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
                 selectedTipoVehiculo = (TipoVehiculo) parent.getItemAtPosition(position);
@@ -73,7 +84,7 @@ public class TipoVehiculoActivity extends AppCompatActivity {
                     listTipoVehiculo.add(tp);
 
                     arrayAdapterTipoVehiculo = new ArrayAdapter<TipoVehiculo>(TipoVehiculoActivity.this, android.R.layout.simple_list_item_1, listTipoVehiculo);
-                    list_tipo_vehiculo.setAdapter(arrayAdapterTipoVehiculo);
+                    listViewTipoVehiculo.setAdapter(arrayAdapterTipoVehiculo);
                 }
             }
 
@@ -92,12 +103,22 @@ public class TipoVehiculoActivity extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference();
     }
 
+    /**
+     * Se crea el menu de la parte superior de la app
+     * @param menu
+     * @return la creacion del menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Realiza la accion dependiendo del boton escogido en el menu superior
+     * @param item boton escogido
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         String nombre = nombreTipoVehiculo.getText().toString();
@@ -143,6 +164,9 @@ public class TipoVehiculoActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Resetea los campos del formulario
+     */
     private void limpiarCajas() {
         nombreTipoVehiculo.setText("");
         añoTipoVehiculo.setText("");

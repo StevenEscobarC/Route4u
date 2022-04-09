@@ -1,4 +1,4 @@
-package com.example.route4you.Model;
+package com.example.route4you.model;
 
 public class TipoGasolina {
 
