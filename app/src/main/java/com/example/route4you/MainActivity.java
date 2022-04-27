@@ -16,8 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnGasolina=null;
+    private Button btnGasolina = null;
     private Button btnTipoVehiculo = null;
+    private Button btnEmpresa = null;
     
     
     @Override
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         btnTipoVehiculo.setOnClickListener(view -> onClickTipoVehiculo());
         btnGasolina=findViewById(R.id.buttonTipoC);
         btnGasolina.setOnClickListener(View -> onClickGasolina());
+        btnEmpresa = findViewById(R.id.buttonEmpresa);
+        btnEmpresa.setOnClickListener(View -> onClickEmpresa());
     }
     /**
      * Lanza la activity correspondiente cuando se presiona el boton
@@ -52,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickGasolina(){
         Intent miIntent = new Intent(MainActivity.this,GasolinaActivity.class);
+        startActivity(miIntent);
+    }
+
+    /**
+     * Lanza la activity correspondiente cuando se presiona el boton
+     */
+    public void onClickEmpresa(){
+        Intent miIntent = new Intent(MainActivity.this,EmpresaActivity.class);
         startActivity(miIntent);
     }
 

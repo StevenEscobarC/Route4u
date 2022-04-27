@@ -26,6 +26,12 @@
             android:text="Tipo Combustible"
             android:layout_gravity="center"
             android:id="@+id/buttonTipoC" />
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="Empresa"
+            android:layout_gravity="center"
+            android:id="@+id/buttonEmpresa" />
     </LinearLayout>
 
 
