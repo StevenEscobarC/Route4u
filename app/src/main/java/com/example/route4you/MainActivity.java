@@ -18,10 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     private Button btnGasolina = null;
     private Button btnTipoVehiculo = null;
-
     private Button btnRuta = null;
-
     private Button btnEmpresa = null;
+    private Button btnMapa = null;
     
     
 
@@ -49,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         btnEmpresa = findViewById(R.id.buttonEmpresa);
         btnEmpresa.setOnClickListener(View -> onClickEmpresa());
+
+        btnMapa = findViewById(R.id.buttonMapa);
+        btnMapa.setOnClickListener(View -> onClickMapa());
 
     }
     /**
@@ -80,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickEmpresa(){
         Intent miIntent = new Intent(MainActivity.this,EmpresaActivity.class);
+        startActivity(miIntent);
+    }
+
+    /**
+     * Lanza la activity correspondiente cuando se presiona el boton
+     */
+    public void onClickMapa(){
+        Intent miIntent = new Intent(MainActivity.this,MapsActivity.class);
         startActivity(miIntent);
     }
 

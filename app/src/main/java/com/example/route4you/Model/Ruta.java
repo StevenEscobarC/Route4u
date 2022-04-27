@@ -1,6 +1,4 @@
-package com.example.route4you.Model;
-
-import java.lang.reflect.Array;
+package com.example.route4you.model;
 
 public class Ruta {
 
