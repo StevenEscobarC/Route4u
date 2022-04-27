@@ -67,4 +67,9 @@ public class Empresa {
     public void setNumeroControles(String numeroControles) {
         this.numeroControles = numeroControles;
     }
+
+    @Override
+    public String toString(){
+        return nombre;
+    }
 }
