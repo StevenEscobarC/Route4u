@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".TipoVehiculoActivity">
+
+    <EditText
+        android:hint="Numero de ruta"
+        android:id="@+id/txt_numRuta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:paddingTop="15dp"/>
+
+
+    <EditText
+        android:id="@+id/txt_inicio"
+        android:hint="Inicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:paddingTop="15dp"/>
+    <EditText
+        android:id="@+id/txt_llegada"
+        android:hint="Llegada"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:paddingTop="15dp"/>
+
+    <EditText
+        android:id="@+id/txt_controles"
+        android:hint="Controles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:paddingTop="15dp"/>
+    <EditText
+        android:id="@+id/txt_imagen"
+        android:hint="Imagen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:paddingTop="15dp"/>
+
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="30dp"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Rutas" />
+
+    <ListView
+        android:id="@+id/lv_datosRuta"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
