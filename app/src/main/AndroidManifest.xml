@@ -32,6 +32,11 @@
             android:name=".RutaActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".EmpresaActivity"
+            android:exported="true">
+        </activity>
+
     </application>
 
 </manifest>
