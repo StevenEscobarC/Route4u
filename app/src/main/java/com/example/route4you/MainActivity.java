@@ -3,9 +3,11 @@ package com.example.route4you;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 /**
@@ -16,71 +18,25 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnGasolina = null;
-    private Button btnTipoVehiculo = null;
 
-    private Button btnRuta = null;
-
-    private Button btnEmpresa = null;
-    
-    
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-
-        initEvents();
-
+        mAuth = FirebaseAuth.getInstance();
     }
 
-    /**
-     * Inicializa los botones
-     */
-    private void initEvents() {
-        btnTipoVehiculo = findViewById(R.id.buttonTipoV);
-        btnTipoVehiculo.setOnClickListener(view -> onClickTipoVehiculo());
-        btnGasolina=findViewById(R.id.buttonTipoC);
-        btnGasolina.setOnClickListener(View -> onClickGasolina());
-
-        btnRuta=findViewById(R.id.buttonRuta);
-        btnRuta.setOnClickListener(View -> onClickRuta());
-
-        btnEmpresa = findViewById(R.id.buttonEmpresa);
-        btnEmpresa.setOnClickListener(View -> onClickEmpresa());
-
-    }
-    /**
-     * Lanza la activity correspondiente cuando se presiona el boton
-     */
-    private void onClickTipoVehiculo() {
-        Intent miIntent = new Intent(MainActivity.this,TipoVehiculoActivity.class);
-        startActivity(miIntent);
-    }
-
-    /**
-     * Lanza la activity correspondiente cuando se presiona el boton
-     */
-    public void onClickGasolina(){
-        Intent miIntent = new Intent(MainActivity.this,GasolinaActivity.class);
-        startActivity(miIntent);
-    }
-    /**
-     * Lanza la activity correspondiente cuando se presiona el boton
-     */
-    public void onClickRuta(){
-        Intent miIntent = new Intent(MainActivity.this,RutaActivity.class);
-        startActivity(miIntent);
-    }
-
-
-    /**
-     * Lanza la activity correspondiente cuando se presiona el boton
-     */
-    public void onClickEmpresa(){
-        Intent miIntent = new Intent(MainActivity.this,EmpresaActivity.class);
-        startActivity(miIntent);
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null){
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }else{
+            startActivity(new Intent(MainActivity.this, DashBoard.class));
+        }
     }
 
 
