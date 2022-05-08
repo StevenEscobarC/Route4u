@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 
-import com.example.route4you.Model.Ruta;
+import com.example.route4you.model.Ruta;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
