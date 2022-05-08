@@ -3,8 +3,6 @@ package com.example.route4you;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -33,11 +31,13 @@ import java.util.UUID;
  * @version 1.0
  */
 public  class GasolinaActivity extends AppCompatActivity {
-    private List<TipoGasolina> listTipoGasolina = new ArrayList<TipoGasolina>();
+    private List<TipoGasolina> listTipoGasolina = new ArrayList<>();
     ArrayAdapter<TipoGasolina> arrayAdapterTipoGasolina;
 
     EditText nombreTipoGasolina;
     ListView listViewTipoGasolina;
+
+    private final static String TIPO_GASOLINA="TipoGasolina";
 
 
     FirebaseDatabase firebaseDatabase;
@@ -62,12 +62,9 @@ public  class GasolinaActivity extends AppCompatActivity {
 
         listarDatosTiposGasolina();
 
-        listViewTipoGasolina.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                selectedTipoGasolina = (TipoGasolina) parent.getItemAtPosition(position);
-                nombreTipoGasolina.setText(selectedTipoGasolina.getName());
-            }
+        listViewTipoGasolina.setOnItemClickListener((parent, view, position, l) -> {
+            selectedTipoGasolina = (TipoGasolina) parent.getItemAtPosition(position);
+            nombreTipoGasolina.setText(selectedTipoGasolina.getName());
         });
     }
 
@@ -83,7 +80,7 @@ public  class GasolinaActivity extends AppCompatActivity {
     }
 
     private void listarDatosTiposGasolina() {
-        databaseReference.child("TipoGasolina").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(TIPO_GASOLINA).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listTipoGasolina.clear();
@@ -91,7 +88,7 @@ public  class GasolinaActivity extends AppCompatActivity {
                     TipoGasolina tg = objSnapshot.getValue(TipoGasolina.class);
                     listTipoGasolina.add(tg);
 
-                    arrayAdapterTipoGasolina = new ArrayAdapter<TipoGasolina>(GasolinaActivity.this, android.R.layout.simple_list_item_1, listTipoGasolina);
+                    arrayAdapterTipoGasolina = new ArrayAdapter<>(GasolinaActivity.this, android.R.layout.simple_list_item_1, listTipoGasolina);
                     listViewTipoGasolina.setAdapter(arrayAdapterTipoGasolina);
                 }
             }
@@ -105,7 +102,6 @@ public  class GasolinaActivity extends AppCompatActivity {
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        //firebaseDatabase.setPersistenceEnabled(true);
         databaseReference = firebaseDatabase.getReference();
     }
 
@@ -126,7 +122,7 @@ public  class GasolinaActivity extends AppCompatActivity {
                     TipoGasolina tg = new TipoGasolina();
                     tg.setUid(UUID.randomUUID().toString());
                     tg.setName(nombre);
-                    databaseReference.child("TipoGasolina").child(tg.getUid()).setValue(tg);
+                    databaseReference.child(TIPO_GASOLINA).child(tg.getUid()).setValue(tg);
                     Toast.makeText(this, "Agregado", Toast.LENGTH_LONG).show();
                     limpiarCajas();
 
@@ -136,7 +132,7 @@ public  class GasolinaActivity extends AppCompatActivity {
             case R.id.icon_delete: {
                 TipoGasolina tg = new TipoGasolina();
                 tg.setUid(selectedTipoGasolina.getUid());
-                databaseReference.child("TipoGasolina").child(tg.getUid()).removeValue();
+                databaseReference.child(TIPO_GASOLINA).child(tg.getUid()).removeValue();
                 Toast.makeText(this, "Eliminado", Toast.LENGTH_LONG).show();
                 limpiarCajas();
                 break;
@@ -145,7 +141,7 @@ public  class GasolinaActivity extends AppCompatActivity {
                 TipoGasolina tg = new TipoGasolina();
                 tg.setUid(selectedTipoGasolina.getUid());
                 tg.setName(nombreTipoGasolina.getText().toString().trim());
-                databaseReference.child("TipoGasolina").child(tg.getUid()).setValue(tg);
+                databaseReference.child(TIPO_GASOLINA).child(tg.getUid()).setValue(tg);
                 Toast.makeText(this, "Actualizado", Toast.LENGTH_LONG).show();
                 limpiarCajas();
                 break;

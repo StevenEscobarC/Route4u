@@ -3,8 +3,6 @@ package com.example.route4you;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -33,7 +31,7 @@ import java.util.UUID;
  * @version 1.0
  */
 public class TipoVehiculoActivity extends AppCompatActivity {
-    private List<TipoVehiculo> listTipoVehiculo = new ArrayList<TipoVehiculo>();
+    private List<TipoVehiculo> listTipoVehiculo = new ArrayList<>();
     ArrayAdapter<TipoVehiculo> arrayAdapterTipoVehiculo;
 
     EditText nombreTipoVehiculo, añoTipoVehiculo;
@@ -43,6 +41,8 @@ public class TipoVehiculoActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
 
     TipoVehiculo selectedTipoVehiculo;
+
+    private final static String TIPO_VEHICULO = "TipoVehiculo";
 
 
     /**
@@ -63,19 +63,16 @@ public class TipoVehiculoActivity extends AppCompatActivity {
 
         listarDatosTiposvehiculo();
 
-        listViewTipoVehiculo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                selectedTipoVehiculo = (TipoVehiculo) parent.getItemAtPosition(position);
-                nombreTipoVehiculo.setText(selectedTipoVehiculo.getName());
-                añoTipoVehiculo.setText(selectedTipoVehiculo.getYear());
-            }
+        listViewTipoVehiculo.setOnItemClickListener((parent, view, position, l) -> {
+            selectedTipoVehiculo = (TipoVehiculo) parent.getItemAtPosition(position);
+            nombreTipoVehiculo.setText(selectedTipoVehiculo.getName());
+            añoTipoVehiculo.setText(selectedTipoVehiculo.getYear());
         });
 
     }
 
     private void listarDatosTiposvehiculo() {
-        databaseReference.child("TipoVehiculo").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(TIPO_VEHICULO).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listTipoVehiculo.clear();
@@ -83,7 +80,7 @@ public class TipoVehiculoActivity extends AppCompatActivity {
                     TipoVehiculo tp = objSnapshot.getValue(TipoVehiculo.class);
                     listTipoVehiculo.add(tp);
 
-                    arrayAdapterTipoVehiculo = new ArrayAdapter<TipoVehiculo>(TipoVehiculoActivity.this, android.R.layout.simple_list_item_1, listTipoVehiculo);
+                    arrayAdapterTipoVehiculo = new ArrayAdapter<>(TipoVehiculoActivity.this, android.R.layout.simple_list_item_1, listTipoVehiculo);
                     listViewTipoVehiculo.setAdapter(arrayAdapterTipoVehiculo);
                 }
             }
@@ -99,7 +96,6 @@ public class TipoVehiculoActivity extends AppCompatActivity {
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        //firebaseDatabase.setPersistenceEnabled(true);
         databaseReference = firebaseDatabase.getReference();
     }
 
@@ -134,7 +130,7 @@ public class TipoVehiculoActivity extends AppCompatActivity {
                     tp.setUid(UUID.randomUUID().toString());
                     tp.setName(nombre);
                     tp.setYear(año);
-                    databaseReference.child("TipoVehiculo").child(tp.getUid()).setValue(tp);
+                    databaseReference.child(TIPO_VEHICULO).child(tp.getUid()).setValue(tp);
                     Toast.makeText(this, "Agregado", Toast.LENGTH_LONG).show();
                     limpiarCajas();
 
@@ -144,7 +140,7 @@ public class TipoVehiculoActivity extends AppCompatActivity {
             case R.id.icon_delete: {
                 TipoVehiculo tp = new TipoVehiculo();
                 tp.setUid(selectedTipoVehiculo.getUid());
-                databaseReference.child("TipoVehiculo").child(tp.getUid()).removeValue();
+                databaseReference.child(TIPO_VEHICULO).child(tp.getUid()).removeValue();
                 Toast.makeText(this, "Eliminado", Toast.LENGTH_LONG).show();
                 limpiarCajas();
                 break;
@@ -154,7 +150,7 @@ public class TipoVehiculoActivity extends AppCompatActivity {
                 tp.setUid(selectedTipoVehiculo.getUid());
                 tp.setName(nombreTipoVehiculo.getText().toString().trim());
                 tp.setYear(añoTipoVehiculo.getText().toString().trim());
-                databaseReference.child("TipoVehiculo").child(tp.getUid()).setValue(tp);
+                databaseReference.child(TIPO_VEHICULO).child(tp.getUid()).setValue(tp);
                 Toast.makeText(this, "Actualizado", Toast.LENGTH_LONG).show();
                 limpiarCajas();
                 break;

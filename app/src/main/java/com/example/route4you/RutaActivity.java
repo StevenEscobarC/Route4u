@@ -3,8 +3,6 @@ package com.example.route4you;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -12,8 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-
 
 import com.example.route4you.model.Ruta;
 import com.google.firebase.FirebaseApp;
@@ -39,6 +35,9 @@ public class RutaActivity extends AppCompatActivity {
 
     Ruta selectedRuta;
 
+    private final static String RUTA = "Ruta";
+    private String requerido = "Requerido";
+
 
     /**
      * Se crea el formulario
@@ -62,17 +61,14 @@ public class RutaActivity extends AppCompatActivity {
 
         listarDatosRuta();
 
-        listViewRuta.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                selectedRuta = (Ruta) parent.getItemAtPosition(position);
-                numRuta.setText(selectedRuta.getNumRuta());
-                inicio.setText(selectedRuta.getInicio());
-                llegada.setText(selectedRuta.getLlegada());
-                controles.setText(selectedRuta.getControles());
-                imagen.setText(selectedRuta.getImagen());
+        listViewRuta.setOnItemClickListener((parent, view, position, l) -> {
+            selectedRuta = (Ruta) parent.getItemAtPosition(position);
+            numRuta.setText(selectedRuta.getNumRuta());
+            inicio.setText(selectedRuta.getInicio());
+            llegada.setText(selectedRuta.getLlegada());
+            controles.setText(selectedRuta.getControles());
+            imagen.setText(selectedRuta.getImagen());
 
-            }
         });
 
     }
@@ -102,7 +98,6 @@ public class RutaActivity extends AppCompatActivity {
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        //firebaseDatabase.serutaersistenceEnabled(true);
         databaseReference = firebaseDatabase.getReference();
     }
 
@@ -151,7 +146,7 @@ public class RutaActivity extends AppCompatActivity {
                     ruta.setControles(controles);
                     ruta.setImagen(imagen);
 
-                    databaseReference.child("Ruta").child(ruta.getUid()).setValue(ruta);
+                    databaseReference.child(RUTA).child(ruta.getUid()).setValue(ruta);
                     Toast.makeText(this, "Agregado", Toast.LENGTH_LONG).show();
                     limpiarCajas();
 
@@ -161,7 +156,7 @@ public class RutaActivity extends AppCompatActivity {
             case R.id.icon_delete: {
                 Ruta ruta = new Ruta();
                 ruta.setUid(selectedRuta.getUid());
-                databaseReference.child("Ruta").child(ruta.getUid()).removeValue();
+                databaseReference.child(RUTA).child(ruta.getUid()).removeValue();
                 Toast.makeText(this, "Eliminado", Toast.LENGTH_LONG).show();
                 limpiarCajas();
                 break;
@@ -174,7 +169,7 @@ public class RutaActivity extends AppCompatActivity {
                 ruta.setLlegada(this.llegada.getText().toString().trim());
                 ruta.setControles(this.controles.getText().toString().trim());
                 ruta.setImagen(this.imagen.getText().toString().trim());
-                databaseReference.child("Ruta").child(ruta.getUid()).setValue(ruta);
+                databaseReference.child(RUTA).child(ruta.getUid()).setValue(ruta);
                 Toast.makeText(this, "Actualizado", Toast.LENGTH_LONG).show();
                 limpiarCajas();
                 break;
@@ -185,23 +180,23 @@ public class RutaActivity extends AppCompatActivity {
     }
 
     private void validationImagen() {
-        imagen.setError("Required");
+        imagen.setError(requerido);
     }
 
     private void validationControles() {
-        controles.setError("Required");
+        controles.setError(requerido);
     }
 
     private void validationLlegada() {
-        llegada.setError("Required");
+        llegada.setError(requerido);
     }
 
     private void validationInicio() {
-        inicio.setError("Required");
+        inicio.setError(requerido);
     }
 
     private void validationNumRuta() {
-        numRuta.setError("Required");
+        numRuta.setError(requerido);
     }
 
     /**

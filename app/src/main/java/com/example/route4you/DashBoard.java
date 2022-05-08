@@ -15,16 +15,6 @@ public class DashBoard extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private Button btnGasolina = null;
-    private Button btnTipoVehiculo = null;
-
-    private Button btnRuta = null;
-
-    private Button btnMapa = null;
-
-    private Button btnEmpresa = null;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,18 +38,18 @@ public class DashBoard extends AppCompatActivity {
      * Inicializa los botones
      */
     private void initEvents() {
-        btnTipoVehiculo = findViewById(R.id.buttonTipoV);
+        Button btnTipoVehiculo = findViewById(R.id.buttonTipoV);
         btnTipoVehiculo.setOnClickListener(view -> onClickTipoVehiculo());
-        btnGasolina=findViewById(R.id.buttonTipoC);
+        Button btnGasolina = findViewById(R.id.buttonTipoC);
         btnGasolina.setOnClickListener(View -> onClickGasolina());
 
-        btnRuta=findViewById(R.id.buttonRuta);
+        Button btnRuta = findViewById(R.id.buttonRuta);
         btnRuta.setOnClickListener(View -> onClickRuta());
 
-        btnEmpresa = findViewById(R.id.buttonEmpresa);
+        Button btnEmpresa = findViewById(R.id.buttonEmpresa);
         btnEmpresa.setOnClickListener(View -> onClickEmpresa());
 
-        btnMapa = findViewById(R.id.buttonMapa);
+        Button btnMapa = findViewById(R.id.buttonMapa);
         btnMapa.setOnClickListener(View -> onClickMapa());
 
         btnSalir = findViewById(R.id.btnSalir);

@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Route4you">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDBYkr45PYnIBHyiL3ke1gKS-F1vUE-KLg" />
+            android:value="@{API_KEY}" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

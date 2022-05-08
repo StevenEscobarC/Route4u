@@ -3,8 +3,6 @@ package com.example.route4you;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -26,7 +24,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class EmpresaActivity extends AppCompatActivity {
-    private List<Empresa> listEmpresa = new ArrayList<Empresa>();
+    private List<Empresa> listEmpresa = new ArrayList<>();
     ArrayAdapter<Empresa> arrayAdapterEmpresa;
 
     EditText nombreEmpresa, direccionEmpresa, numeroControlesEmpresa, emailEmpresa, telefonoEmpresa, contraseñaEmpresa;
@@ -37,6 +35,9 @@ public class EmpresaActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
 
     Empresa selectedEmpresa;
+
+    private String mensaje = "Requerido";
+    private final static String EMPRESA = "Empresa";
 
 
     /**
@@ -61,23 +62,20 @@ public class EmpresaActivity extends AppCompatActivity {
 
         listarDatosEmpresa();
 
-        listViewEmpresa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-                selectedEmpresa = (Empresa) parent.getItemAtPosition(position);
-                nombreEmpresa.setText(selectedEmpresa.getNombre());
-                direccionEmpresa.setText(selectedEmpresa.getDireccion());
-                emailEmpresa.setText(selectedEmpresa.getEmail());
-                telefonoEmpresa.setText(selectedEmpresa.getTelefono());
-                contraseñaEmpresa.setText(selectedEmpresa.getContraseña());
-                numeroControlesEmpresa.setText(selectedEmpresa.getNumeroControles());
-            }
+        listViewEmpresa.setOnItemClickListener((parent, view, position, l) -> {
+            selectedEmpresa = (Empresa) parent.getItemAtPosition(position);
+            nombreEmpresa.setText(selectedEmpresa.getNombre());
+            direccionEmpresa.setText(selectedEmpresa.getDireccion());
+            emailEmpresa.setText(selectedEmpresa.getEmail());
+            telefonoEmpresa.setText(selectedEmpresa.getTelefono());
+            contraseñaEmpresa.setText(selectedEmpresa.getContraseña());
+            numeroControlesEmpresa.setText(selectedEmpresa.getNumeroControles());
         });
 
     }
 
     private void listarDatosEmpresa() {
-        databaseReference.child("Empresa").addValueEventListener(new ValueEventListener() {
+        databaseReference.child(EMPRESA).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 listEmpresa.clear();
@@ -85,7 +83,7 @@ public class EmpresaActivity extends AppCompatActivity {
                     Empresa em = objSnapshot.getValue(Empresa.class);
                     listEmpresa.add(em);
 
-                    arrayAdapterEmpresa = new ArrayAdapter<Empresa>(EmpresaActivity.this, android.R.layout.simple_list_item_1, listEmpresa);
+                    arrayAdapterEmpresa = new ArrayAdapter<>(EmpresaActivity.this, android.R.layout.simple_list_item_1, listEmpresa);
                     listViewEmpresa.setAdapter(arrayAdapterEmpresa);
                 }
             }
@@ -101,7 +99,6 @@ public class EmpresaActivity extends AppCompatActivity {
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        //firebaseDatabase.seemersistenceEnabled(true);
         databaseReference = firebaseDatabase.getReference();
     }
 
@@ -153,7 +150,7 @@ public class EmpresaActivity extends AppCompatActivity {
                     em.setNumeroControles(numeroControl);
                     em.setContraseña(contraseña);
                     em.setTelefono(telefono);
-                    databaseReference.child("Empresa").child(em.getUid()).setValue(em);
+                    databaseReference.child(EMPRESA).child(em.getUid()).setValue(em);
                     Toast.makeText(this, "Agregado", Toast.LENGTH_LONG).show();
                     limpiarCajas();
 
@@ -163,7 +160,7 @@ public class EmpresaActivity extends AppCompatActivity {
             case R.id.icon_delete: {
                 Empresa em = new Empresa();
                 em.setUid(selectedEmpresa.getUid());
-                databaseReference.child("Empresa").child(em.getUid()).removeValue();
+                databaseReference.child(EMPRESA).child(em.getUid()).removeValue();
                 Toast.makeText(this, "Eliminado", Toast.LENGTH_LONG).show();
                 limpiarCajas();
                 break;
@@ -177,7 +174,7 @@ public class EmpresaActivity extends AppCompatActivity {
                 em.setNumeroControles(numeroControlesEmpresa.getText().toString().trim());
                 em.setContraseña(contraseñaEmpresa.getText().toString().trim());
                 em.setTelefono(telefonoEmpresa.getText().toString().trim());
-                databaseReference.child("Empresa").child(em.getUid()).setValue(em);
+                databaseReference.child(EMPRESA).child(em.getUid()).setValue(em);
                 Toast.makeText(this, "Actualizado", Toast.LENGTH_LONG).show();
                 limpiarCajas();
                 break;
@@ -203,26 +200,26 @@ public class EmpresaActivity extends AppCompatActivity {
     }
 
     private void validationNombre(){
-        nombreEmpresa.setError("Required");
+        nombreEmpresa.setError(mensaje);
     }
 
     private void validationTelefono() {
-        telefonoEmpresa.setError("Required");
+        telefonoEmpresa.setError(mensaje);
     }
 
     private void validationNumeroControl() {
-        numeroControlesEmpresa.setError("Required");
+        numeroControlesEmpresa.setError(mensaje);
     }
 
     private void validationDireccion() {
-        direccionEmpresa.setError("Required");
+        direccionEmpresa.setError(mensaje);
     }
 
     private void validationContraseña() {
-        contraseñaEmpresa.setError("Required");
+        contraseñaEmpresa.setError(mensaje);
     }
 
     private void validationEmail() {
-        emailEmpresa.setError("Required");
+        emailEmpresa.setError(mensaje);
     }
 }

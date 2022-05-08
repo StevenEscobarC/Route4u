@@ -36,7 +36,7 @@
 
     <EditText
         android:id="@+id/txt_controles"
-        android:hint="Controles"
+        android:hint="Puntos clave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
