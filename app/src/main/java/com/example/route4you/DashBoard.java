@@ -20,6 +20,8 @@ public class DashBoard extends AppCompatActivity {
 
     private Button btnRuta = null;
 
+    private Button btnMapa = null;
+
     private Button btnEmpresa = null;
 
 
@@ -57,6 +59,9 @@ public class DashBoard extends AppCompatActivity {
         btnEmpresa = findViewById(R.id.buttonEmpresa);
         btnEmpresa.setOnClickListener(View -> onClickEmpresa());
 
+        btnMapa = findViewById(R.id.buttonMapa);
+        btnMapa.setOnClickListener(View -> onClickMapa());
+
         btnSalir = findViewById(R.id.btnSalir);
 
         mAuth = FirebaseAuth.getInstance();
@@ -91,6 +96,14 @@ public class DashBoard extends AppCompatActivity {
      */
     public void onClickEmpresa(){
         Intent miIntent = new Intent(DashBoard.this,EmpresaActivity.class);
+        startActivity(miIntent);
+    }
+
+    /**
+     * Lanza la activity correspondiente cuando se presiona el boton
+     */
+    public void onClickMapa(){
+        Intent miIntent = new Intent(DashBoard.this,MapsActivity.class);
         startActivity(miIntent);
     }
 
