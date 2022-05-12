@@ -1,6 +1,7 @@
 package com.example.route4you;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -22,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class EmpresaActivity extends AppCompatActivity {
     private List<Empresa> listEmpresa = new ArrayList<>();
@@ -141,6 +143,13 @@ public class EmpresaActivity extends AppCompatActivity {
                     validationNumeroControl();
                 }else if(telefono.equals("")){
                     validationTelefono();
+                }else if(!validarEmail(email)){
+                    emailEmpresa.setError("Email no válido");
+
+                }else if(contraseña.length()<6){
+                    contraseñaEmpresa.setError("La contraseña debe tener almenos 6 caracteres");
+                }else if(telefono.length()<7){
+                    telefonoEmpresa.setError("El telefono debe tener almenos 7 caracteres");
                 }else {
                     Empresa em = new Empresa();
                     em.setUid(UUID.randomUUID().toString());
@@ -182,6 +191,12 @@ public class EmpresaActivity extends AppCompatActivity {
             default: break;
         }
         return true;
+    }
+
+
+    private boolean validarEmail(String email) {
+        Pattern pattern = Patterns.EMAIL_ADDRESS;
+        return pattern.matcher(email).matches();
     }
 
 

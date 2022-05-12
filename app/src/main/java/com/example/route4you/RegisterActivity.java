@@ -76,17 +76,17 @@ public class RegisterActivity extends AppCompatActivity {
         String password = txtPassword.getEditText().getText().toString();
 
         if (TextUtils.isEmpty(name)){
-            txtMail.setError("Ingrese un Nombre");
-            txtMail.requestFocus();
+            txtUser.setError("Ingrese un Nombre");
+            txtUser.requestFocus();
         }else if (TextUtils.isEmpty(mail)){
             txtMail.setError("Ingrese un Correo");
             txtMail.requestFocus();
         }else if (TextUtils.isEmpty(phone)){
-            txtMail.setError("Ingrese un Teléfono");
-            txtMail.requestFocus();
+            txtPhone.setError("Ingrese un Teléfono");
+            txtPhone.requestFocus();
         }else if (TextUtils.isEmpty(password)){
-            txtMail.setError("Ingrese una Contraseña");
-            txtMail.requestFocus();
+            txtPassword.setError("Ingrese una Contraseña");
+            txtPassword.requestFocus();
         }else {
 
             mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -111,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(RegisterActivity.this, "Usuario Registrado", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     }else {
-                        Toast.makeText(RegisterActivity.this, "Usuario no registrado"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Usuario no registrado "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 }

@@ -38,10 +38,10 @@ public class DashBoard extends AppCompatActivity {
      * Inicializa los botones
      */
     private void initEvents() {
-        Button btnTipoVehiculo = findViewById(R.id.buttonTipoV);
-        btnTipoVehiculo.setOnClickListener(view -> onClickTipoVehiculo());
-        Button btnGasolina = findViewById(R.id.buttonTipoC);
-        btnGasolina.setOnClickListener(View -> onClickGasolina());
+//        Button btnTipoVehiculo = findViewById(R.id.buttonTipoV);
+//        btnTipoVehiculo.setOnClickListener(view -> onClickTipoVehiculo());
+//        Button btnGasolina = findViewById(R.id.buttonTipoC);
+//        btnGasolina.setOnClickListener(View -> onClickGasolina());
 
         Button btnRuta = findViewById(R.id.buttonRuta);
         btnRuta.setOnClickListener(View -> onClickRuta());
