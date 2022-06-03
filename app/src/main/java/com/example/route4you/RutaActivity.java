@@ -1,13 +1,20 @@
 package com.example.route4you;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +31,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class RutaActivity extends AppCompatActivity {
+    ActivityResultLauncher<Intent> actResLauncherSelectPhoto;
+
     private List<Ruta> listRuta = new ArrayList<>();
     ArrayAdapter<Ruta> arrayAdapterRuta;
 
@@ -37,6 +46,8 @@ public class RutaActivity extends AppCompatActivity {
 
     private final static String RUTA = "Ruta";
     private String requerido = "Requerido";
+    private Button seleccionarFoto = null;
+    private ImageView foto = null;
 
 
     /**
@@ -69,6 +80,41 @@ public class RutaActivity extends AppCompatActivity {
             controles.setText(selectedRuta.getControles());
             imagen.setText(selectedRuta.getImagen());
 
+        });
+
+        seleccionarFoto = findViewById(R.id.butSelectPhoto);
+
+        actResLauncherSelectPhoto = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            switch (result.getResultCode()){
+                case RESULT_OK:
+                    Log.d("Take Photo", "Select Photo");
+                    Uri selectImageUri = result.getData().getData();
+                    if(null != selectImageUri){
+
+                        runOnUiThread(() -> {
+                            foto.setImageBitmap(null);
+                            foto.setImageURI(selectImageUri);
+                        });
+                    }
+                    break;
+
+            }
+        });
+
+        seleccionarFoto.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_PICK);
+
+            if(intent.resolveActivity(getPackageManager()) != null){
+                try {
+                    actResLauncherSelectPhoto.launch(intent);
+                }catch (Exception e){
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(this, "There is no app that support this action", Toast.LENGTH_SHORT).show();
+            }
         });
 
     }
