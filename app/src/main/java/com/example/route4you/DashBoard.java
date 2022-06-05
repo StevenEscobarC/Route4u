@@ -52,6 +52,9 @@ public class DashBoard extends AppCompatActivity {
         Button btnMapa = findViewById(R.id.buttonMapa);
         btnMapa.setOnClickListener(View -> onClickMapa());
 
+        Button btnBuscarRuta = findViewById(R.id.buttonBuscarRuta);
+        btnBuscarRuta.setOnClickListener(View -> onClickBuscarRuta());
+
         btnSalir = findViewById(R.id.btnSalir);
 
         mAuth = FirebaseAuth.getInstance();
@@ -94,6 +97,14 @@ public class DashBoard extends AppCompatActivity {
      */
     public void onClickMapa(){
         Intent miIntent = new Intent(DashBoard.this,MapsActivity.class);
+        startActivity(miIntent);
+    }
+
+    /**
+     * Lanza la activity correspondiente cuando se presiona el boton
+     */
+    public void onClickBuscarRuta(){
+        Intent miIntent = new Intent(DashBoard.this,BuscarRutaActivity.class);
         startActivity(miIntent);
     }
 

@@ -26,6 +26,16 @@
             android:text="Rutas" />
 
         <Button
+
+            android:id="@+id/buttonBuscarRuta"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/btnPrimary"
+            android:fontFamily="@font/montserratbold"
+            android:text="Buscar Rutas" />
+
+        <Button
             android:id="@+id/buttonEmpresa"
             android:layout_width="200dp"
             android:layout_height="wrap_content"

@@ -45,8 +45,7 @@
         </activity>
         <activity
             android:name=".EmpresaActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"/>
         <activity
             android:name="com.example.route4you.DashBoard"
             android:exported="true" />
@@ -57,9 +56,11 @@
             android:name="com.example.route4you.LoginActivity"
             android:exported="true" />
         <activity
+            android:name="com.example.route4you.BuscarRutaActivity"
+            android:exported="true"/>
+        <activity
             android:name=".MapsActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"/>
 
 
         <provider

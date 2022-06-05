@@ -81,15 +81,8 @@ public class RutaActivity extends AppCompatActivity {
         inicio = findViewById(R.id.txt_inicio);
         llegada = findViewById(R.id.txt_llegada);
         controles = findViewById(R.id.txt_controles);
-
-
         foto = findViewById(R.id.imgPhoto);
-
-
         listViewRuta = findViewById(R.id.lv_datosRuta);
-
-
-
         listarDatosRuta();
 
         listViewRuta.setOnItemClickListener((parent, view, position, l) -> {
