@@ -1,8 +1,11 @@
 package com.example.route4you;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -36,7 +40,7 @@ public class RutaActivity extends AppCompatActivity {
     private List<Ruta> listRuta = new ArrayList<>();
     ArrayAdapter<Ruta> arrayAdapterRuta;
 
-    EditText numRuta, inicio, llegada,controles,imagen;
+    EditText numRuta, inicio, llegada,controles;
     ListView listViewRuta;
 
     FirebaseDatabase firebaseDatabase;
@@ -49,6 +53,9 @@ public class RutaActivity extends AppCompatActivity {
     private Button seleccionarFoto = null;
     private ImageView foto = null;
 
+
+
+    private String imagenString = "";
 
     /**
      * Se crea el formulario
@@ -64,7 +71,13 @@ public class RutaActivity extends AppCompatActivity {
         inicio = findViewById(R.id.txt_inicio);
         llegada = findViewById(R.id.txt_llegada);
         controles = findViewById(R.id.txt_controles);
-        imagen = findViewById(R.id.txt_imagen);
+
+
+        foto = findViewById(R.id.imgPhoto);
+
+
+
+
 
         listViewRuta = findViewById(R.id.lv_datosRuta);
 
@@ -78,7 +91,10 @@ public class RutaActivity extends AppCompatActivity {
             inicio.setText(selectedRuta.getInicio());
             llegada.setText(selectedRuta.getLlegada());
             controles.setText(selectedRuta.getControles());
-            imagen.setText(selectedRuta.getImagen());
+
+            byte[] data = Base64.decode(selectedRuta.getImagen(), Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+            foto.setImageBitmap(bitmap);
 
         });
 
@@ -94,6 +110,9 @@ public class RutaActivity extends AppCompatActivity {
                         runOnUiThread(() -> {
                             foto.setImageBitmap(null);
                             foto.setImageURI(selectImageUri);
+                            guardarImagen();
+
+
                         });
                     }
                     break;
@@ -116,6 +135,9 @@ public class RutaActivity extends AppCompatActivity {
                 Toast.makeText(this, "There is no app that support this action", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
 
     }
 
@@ -169,7 +191,7 @@ public class RutaActivity extends AppCompatActivity {
         String inicio= this.inicio.getText().toString();
         String llegada = this.llegada.getText().toString();
         String controles = this.controles.getText().toString();
-        String imagen = this.imagen.getText().toString();
+        String imagen = imagenString;
         
         switch (item.getItemId()){
             case R.id.icon_add: {
@@ -181,9 +203,14 @@ public class RutaActivity extends AppCompatActivity {
                     validationLlegada();
                 }else if(controles.equals("")){
                     validationControles();
-                }else if(imagen.equals("")){
+                }
+                /*
+                else if(imagen.equals("")){
                     validationImagen();
-                }else {
+                }
+
+                 */
+                else {
                     Ruta ruta = new Ruta();
                     ruta.setUid(UUID.randomUUID().toString());
                     ruta.setNumRuta(numRuta);
@@ -214,7 +241,7 @@ public class RutaActivity extends AppCompatActivity {
                 ruta.setInicio(this.inicio.getText().toString().trim());
                 ruta.setLlegada(this.llegada.getText().toString().trim());
                 ruta.setControles(this.controles.getText().toString().trim());
-                ruta.setImagen(this.imagen.getText().toString().trim());
+                ruta.setImagen(imagen);
                 databaseReference.child(RUTA).child(ruta.getUid()).setValue(ruta);
                 Toast.makeText(this, "Actualizado", Toast.LENGTH_LONG).show();
                 limpiarCajas();
@@ -225,9 +252,21 @@ public class RutaActivity extends AppCompatActivity {
         return true;
     }
 
-    private void validationImagen() {
-        imagen.setError(requerido);
+    private void guardarImagen(){
+        foto.buildDrawingCache();
+        Bitmap bitmap = foto.getDrawingCache();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] imagen2 = stream.toByteArray();
+        imagenString = Base64.encodeToString(imagen2, Base64.DEFAULT);
     }
+
+    /*
+     private void validationImagen() {
+        foto.setError(requerido);
+    }
+     */
+
 
     private void validationControles() {
         controles.setError(requerido);
@@ -251,7 +290,7 @@ public class RutaActivity extends AppCompatActivity {
     private void limpiarCajas() {
         numRuta.setText("");
         llegada.setText("");
-        imagen.setText("");
+        foto.setImageBitmap(null);
         inicio.setText("");
         controles.setText("");
 
