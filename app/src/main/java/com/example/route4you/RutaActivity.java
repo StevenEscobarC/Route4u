@@ -39,14 +39,16 @@ public class RutaActivity extends AppCompatActivity {
 
     private List<Ruta> listRuta = new ArrayList<>();
     ArrayAdapter<Ruta> arrayAdapterRuta;
+    ListView listViewRuta;
+    Ruta selectedRuta;
 
     EditText numRuta, inicio, llegada,controles;
-    ListView listViewRuta;
+
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
-    Ruta selectedRuta;
+
 
     private final static String RUTA = "Ruta";
     private String requerido = "Requerido";
@@ -67,6 +69,14 @@ public class RutaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ruta);
 
+        initFirebase();
+        initViews();
+
+
+
+    }
+
+    private void initViews() {
         numRuta = findViewById(R.id.txt_numRuta);
         inicio = findViewById(R.id.txt_inicio);
         llegada = findViewById(R.id.txt_llegada);
@@ -76,12 +86,9 @@ public class RutaActivity extends AppCompatActivity {
         foto = findViewById(R.id.imgPhoto);
 
 
-
-
-
         listViewRuta = findViewById(R.id.lv_datosRuta);
 
-        initFirebase();
+
 
         listarDatosRuta();
 
@@ -111,8 +118,6 @@ public class RutaActivity extends AppCompatActivity {
                             foto.setImageBitmap(null);
                             foto.setImageURI(selectImageUri);
                             guardarImagen();
-
-
                         });
                     }
                     break;
@@ -135,10 +140,6 @@ public class RutaActivity extends AppCompatActivity {
                 Toast.makeText(this, "There is no app that support this action", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
     }
 
     private void listarDatosRuta() {

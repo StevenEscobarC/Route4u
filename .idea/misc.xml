@@ -25,6 +25,7 @@
         <entry key="..\:/Users/Steven/Desktop/Estudio/route4you2/app/src/main/res/drawable-mdpi/ic_phone.xml" value="0.308" />
         <entry key="..\:/Users/Steven/Desktop/Estudio/route4you2/app/src/main/res/drawable-mdpi/ic_phone_focused.xml" value="0.308" />
         <entry key="..\:/Users/Steven/Desktop/Estudio/route4you2/app/src/main/res/drawable-mdpi/ic_undraw_pet_adoption_2qkw_1.xml" value="0.308" />
+        <entry key="..\:/Users/Steven/Desktop/Estudio/route4you2/app/src/main/res/layout/activity_buscar_ruta.xml" value="0.33" />
         <entry key="..\:/Users/Steven/Desktop/Estudio/route4you2/app/src/main/res/layout/activity_dash_board.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Steven/Desktop/Estudio/route4you2/app/src/main/res/layout/activity_empresa.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Steven/Desktop/Estudio/route4you2/app/src/main/res/layout/activity_gasolina.xml" value="0.36666666666666664" />
@@ -43,5 +44,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.365625" />
+      </ProjectState>
+    </option>
   </component>
 </project>
