@@ -1,14 +1,22 @@
 package com.example.route4you;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.route4you.model.Ruta;
@@ -24,8 +32,13 @@ import java.util.List;
 
 public class BuscarRutaActivity extends AppCompatActivity {
     EditText filtrado;
-
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    private TextView numRuta, inicio, llegada,controles;
+    private ImageView foto = null;
+    private Button popUp_Ok;
     //Variables ruta
+
     private List<Ruta> listRuta = new ArrayList<>();
     ArrayAdapter<Ruta> arrayAdapterRuta;
     ListView listViewRuta;
@@ -66,6 +79,13 @@ public class BuscarRutaActivity extends AppCompatActivity {
 
             }
         });
+        listViewRuta.setOnItemClickListener((parent, view, position, l) -> {
+            selectedRuta = (Ruta) parent.getItemAtPosition(position);
+            //Inyeccion datos ruta en popUp
+            createNewRutaDialog(selectedRuta);
+
+        });
+
     }
 
     private void initFirebase() {
@@ -92,6 +112,35 @@ public class BuscarRutaActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
+    //Dialog de la ruta seleccionada
+    public void createNewRutaDialog(Ruta selectedRuta){
+        dialogBuilder=new AlertDialog.Builder(this);
+        final View rutaPopupView= getLayoutInflater().inflate(R.layout.popup,null);
+        numRuta = rutaPopupView.findViewById(R.id.numRuta);
+        numRuta.setText(selectedRuta.getNumRuta());
+        inicio = rutaPopupView.findViewById(R.id.inicio);
+        inicio.setText(selectedRuta.getInicio());
+        llegada = rutaPopupView.findViewById(R.id.llegada);
+        llegada.setText(selectedRuta.getLlegada());
+        controles = rutaPopupView.findViewById(R.id.controles);
+        controles.setText(selectedRuta.getControles());
+        foto = rutaPopupView.findViewById(R.id.imagenRuta);
+
+        byte[] data = Base64.decode(selectedRuta.getImagen(), Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+        foto.setImageBitmap(bitmap);
+        popUp_Ok=(Button) rutaPopupView.findViewById(R.id.btnOk);
+        dialogBuilder.setView(rutaPopupView);
+        dialog=dialogBuilder.create();
+        dialog.show();
+
+        popUp_Ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
             }
         });
     }

@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class RutaActivity extends AppCompatActivity {
+
     ActivityResultLauncher<Intent> actResLauncherSelectPhoto;
 
     private List<Ruta> listRuta = new ArrayList<>();
@@ -87,6 +88,7 @@ public class RutaActivity extends AppCompatActivity {
 
         listViewRuta.setOnItemClickListener((parent, view, position, l) -> {
             selectedRuta = (Ruta) parent.getItemAtPosition(position);
+            //Inyeccion datos ruta en popUp
             numRuta.setText(selectedRuta.getNumRuta());
             inicio.setText(selectedRuta.getInicio());
             llegada.setText(selectedRuta.getLlegada());
