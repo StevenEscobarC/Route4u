@@ -18,8 +18,16 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Formulario para que el usuario pueda ingresar a la aplicación y acceder a sus funcionalidades,
+ * con autenticación por email y contraseña
+ *
+ * @author Legions
+ * @version 1.1
+ */
 public class LoginActivity extends AppCompatActivity {
 
+    //Variables del formulario
     private EditText txtMail;
     private TextInputLayout txtPassword;
     private Button btnLogin;
@@ -32,6 +40,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        initViews();
+
+
+    }//End onCreate
+
+    /**
+     * Inicia las vistas y los eventos de los botónes
+     */
+    private void initViews(){
         txtMail = findViewById(R.id.txtMail);
         txtPassword = findViewById(R.id.txtPassword);
         lblRegister = findViewById(R.id.lblRegister);
@@ -39,19 +56,30 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        /**
+         * {@link #userLogin()}
+         */
         btnLogin.setOnClickListener(view -> {
             userLogin();
         });
 
         lblRegister.setOnClickListener(view -> openRegisterActivity());
+    }
 
-    }//End onCreate
-
+    /**
+     * Abre el RegisterActivity
+     */
     public void openRegisterActivity() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }// End openRegisterActivity
 
+    /**
+     * Se obtienen los datos de los campos de texto para luego validarlos
+     * y si esta correcto realiza la autenticacion de firebase por medio
+     * del medio escogido en la configuración de este servicio,
+     * en este caso ingresar por email y contraseña
+     */
     public void userLogin(){
         String mail = txtMail.getText().toString();
         String password = txtPassword.getEditText().getText().toString();

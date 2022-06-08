@@ -19,6 +19,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+/**
+ * Clase que contiene los métodos requeridos para la visualización del
+ * mapa proveniente de la API de google maps
+ *
+ * @author Legions
+ * @version 1.1
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -35,6 +42,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getLocalizacion();
     }
 
+    /**
+     * Verifica que se tengan los permisos del usuario referente a la ubicación del dispositivo móvil,
+     * de tenerlos se envía un código de respuesta correcto para que se proceda a mostrar en el mapa
+     */
     private void getLocalizacion() {
         int permiso = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
         if(permiso == PackageManager.PERMISSION_DENIED){
@@ -45,6 +56,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * Al objeto de tipo GoogleMap se le activa la ubicación del dispositivo
+     * además de poner en el mapa la ubicacion obteniendo la latitud y longitud obtenida
+     * de la localización
+     *
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;

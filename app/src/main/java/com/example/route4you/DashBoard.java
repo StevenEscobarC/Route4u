@@ -8,11 +8,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Muestra los botónes para redirigirse a una funcionalidad
+ * de la aplicación en específico
+ *
+ * @author Legions
+ * @version 1.1
+ */
 public class DashBoard extends AppCompatActivity {
 
-
+    //Botones para mostrar en la vista
     private Button btnSalir;
+    private Button btnRuta;
+    private Button btnEmpresa;
+    private Button btnMapa;
+    private Button btnBuscarRuta;
 
+    //Variable para cerrar sesión en firebase
     private FirebaseAuth mAuth;
 
 
@@ -21,21 +33,11 @@ public class DashBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash_board);
 
-
         initEvents();
-
-        btnSalir.setOnClickListener(view -> {
-            mAuth.signOut();
-            startActivity(new Intent(this, LoginActivity.class));
-
-        });
-
-
-
     }
 
     /**
-     * Inicializa los botones
+     * Asigna los botones
      */
     private void initEvents() {
 //        Button btnTipoVehiculo = findViewById(R.id.buttonTipoV);
@@ -43,25 +45,34 @@ public class DashBoard extends AppCompatActivity {
 //        Button btnGasolina = findViewById(R.id.buttonTipoC);
 //        btnGasolina.setOnClickListener(View -> onClickGasolina());
 
-        Button btnRuta = findViewById(R.id.buttonRuta);
+        //Asignación de los botones y acción a realizar si se oprimen
+        btnRuta = findViewById(R.id.buttonRuta);
         btnRuta.setOnClickListener(View -> onClickRuta());
 
-        Button btnEmpresa = findViewById(R.id.buttonEmpresa);
+        btnEmpresa = findViewById(R.id.buttonEmpresa);
         btnEmpresa.setOnClickListener(View -> onClickEmpresa());
 
-        Button btnMapa = findViewById(R.id.buttonMapa);
+        btnMapa = findViewById(R.id.buttonMapa);
         btnMapa.setOnClickListener(View -> onClickMapa());
 
-        Button btnBuscarRuta = findViewById(R.id.buttonBuscarRuta);
+        btnBuscarRuta = findViewById(R.id.buttonBuscarRuta);
         btnBuscarRuta.setOnClickListener(View -> onClickBuscarRuta());
 
         btnSalir = findViewById(R.id.btnSalir);
-
         mAuth = FirebaseAuth.getInstance();
+
+        /**
+         *Si se oprime el botón se cierra la sesión
+         */
+        btnSalir.setOnClickListener(view -> {
+            mAuth.signOut();
+            startActivity(new Intent(this, LoginActivity.class));
+
+        });
 
     }
     /**
-     * Lanza la activity correspondiente cuando se presiona el boton
+     * Lanza la activity correspondiente cuando se presiona el botón
      */
     private void onClickTipoVehiculo() {
         Intent miIntent = new Intent(DashBoard.this,TipoVehiculoActivity.class);
@@ -69,23 +80,23 @@ public class DashBoard extends AppCompatActivity {
     }
 
     /**
-     * Lanza la activity correspondiente cuando se presiona el boton
+     * Lanza la activity correspondiente cuando se presiona el botón
      */
     public void onClickGasolina(){
         Intent miIntent = new Intent(DashBoard.this,GasolinaActivity.class);
         startActivity(miIntent);
     }
+
     /**
-     * Lanza la activity correspondiente cuando se presiona el boton
+     * Lanza RutaActivity cuando se presiona el botón
      */
     public void onClickRuta(){
         Intent miIntent = new Intent(DashBoard.this,RutaActivity.class);
         startActivity(miIntent);
     }
 
-
     /**
-     * Lanza la activity correspondiente cuando se presiona el boton
+     * Lanza EmpresaActivity correspondiente cuando se presiona el botón
      */
     public void onClickEmpresa(){
         Intent miIntent = new Intent(DashBoard.this,EmpresaActivity.class);
@@ -93,7 +104,7 @@ public class DashBoard extends AppCompatActivity {
     }
 
     /**
-     * Lanza la activity correspondiente cuando se presiona el boton
+     * Lanza MapsActivity cuando se presiona el botón
      */
     public void onClickMapa(){
         Intent miIntent = new Intent(DashBoard.this,MapsActivity.class);
@@ -101,7 +112,7 @@ public class DashBoard extends AppCompatActivity {
     }
 
     /**
-     * Lanza la activity correspondiente cuando se presiona el boton
+     * Lanza BuscarRutaActivity cuando se presiona el botón
      */
     public void onClickBuscarRuta(){
         Intent miIntent = new Intent(DashBoard.this,BuscarRutaActivity.class);

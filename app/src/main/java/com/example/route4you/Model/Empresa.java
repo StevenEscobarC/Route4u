@@ -1,5 +1,11 @@
 package com.example.route4you.model;
 
+/**
+ * Clase que se encarga de modelar la empresa
+ *
+ * @author Legions
+ * @version 1.1
+ */
 public class Empresa {
     private String uid;
     private String nombre;
@@ -68,6 +74,10 @@ public class Empresa {
         this.numeroControles = numeroControles;
     }
 
+    /**
+     * Al listar las empresas muestra el nombre
+     * @return el nombre de la empresa
+     */
     @Override
     public String toString(){
         return nombre;

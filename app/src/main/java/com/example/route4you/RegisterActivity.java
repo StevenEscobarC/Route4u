@@ -24,9 +24,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Clase que contiene el formulario de registro del usuario
+ *
+ * @author Legions
+ * @version 1.1
+ */
 public class RegisterActivity extends AppCompatActivity {
 
-
+    //Variables necesarias para capturar la información de los campos
     private EditText txtUser;
     private EditText txtMail;
     private EditText txtPhone;
@@ -44,6 +50,15 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
+        initViews();
+
+    }//End onCreate
+
+    /**
+     * Inicia las vistas y dependiendo de cual botón se presione
+     * realiza una serie de acciones
+     */
+    private void initViews() {
         txtUser = findViewById(R.id.txtUser);
         txtMail = findViewById(R.id.txtMail);
         txtPhone = findViewById(R.id.txtPhone);
@@ -54,20 +69,31 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        /**
+         * {@link #createuser()}
+         */
         btnRegister.setOnClickListener(view ->  createuser() );
 
-
+        /**
+         * {@link #openLoginActivity()}
+         */
         lblLogin.setOnClickListener(view -> openLoginActivity());
-
-    }//End onCreate
-
+    }//end initViews
 
 
+    /**
+     * Abre la actividad de login
+     */
     public void openLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }// End openLoginActivity
 
+    /**
+     * Obtiene los valores de los campos, procede a validarlos y si esta bien
+     * se llama al servicio de Firebase Authenticator, se suben los datos del usuario
+     * a la base de datos de firebase y muestra una alerta de que ha sido registrado con éxito
+     */
     public void createuser(){
 
         String name = txtUser.getText().toString();
@@ -89,6 +115,9 @@ public class RegisterActivity extends AppCompatActivity {
             txtPassword.requestFocus();
         }else {
 
+            /**
+             * Se le dice al autenticador que el usuario se va a registrar con el correo y la contraseña
+             */
             mAuth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {

@@ -11,12 +11,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 /**
- * Clase main, pagina principal de la app
+ * Clase main, página principal de la app
  *
  * @author Legions
- * @version 1.0
+ * @version 1.1
  */
-
 public class MainActivity extends AppCompatActivity {
 
 

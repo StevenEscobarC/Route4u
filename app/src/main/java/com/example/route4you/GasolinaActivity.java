@@ -25,10 +25,10 @@ import java.util.UUID;
 
 
 /**
- * Clase donde se define la estructura del formulario de tipo de gasolina
+ *Clase dónde se define la estructura del formulario de tipo de gasolina
  *
- * @author Legions
- * @version 1.0
+ *@author Legions
+ *@version 1.1
  */
 public  class GasolinaActivity extends AppCompatActivity {
     private List<TipoGasolina> listTipoGasolina = new ArrayList<>();

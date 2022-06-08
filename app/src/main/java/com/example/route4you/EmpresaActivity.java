@@ -25,20 +25,32 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+/**
+ * Muestra el formulario para las empresas,
+ * con opciones de crear, eliminar y editar una empresa,
+ * además de esto muestra el listado proveniente de la base de datos
+ *
+ * @author Legions
+ * @version 1.1
+ */
 public class EmpresaActivity extends AppCompatActivity {
+
+    //Variables necesarias para el diligenciamiento del formulario
     private List<Empresa> listEmpresa = new ArrayList<>();
-    ArrayAdapter<Empresa> arrayAdapterEmpresa;
+    private ArrayAdapter<Empresa> arrayAdapterEmpresa;
+    private EditText nombreEmpresa, direccionEmpresa, numeroControlesEmpresa, emailEmpresa, telefonoEmpresa, contraseñaEmpresa;
+    private ListView listViewEmpresa;
 
-    EditText nombreEmpresa, direccionEmpresa, numeroControlesEmpresa, emailEmpresa, telefonoEmpresa, contraseñaEmpresa;
-    ListView listViewEmpresa;
+    //inicializaciond e la base de datos
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
+    private Empresa selectedEmpresa;
 
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
-
-    Empresa selectedEmpresa;
-
+    //variable para la validación de los campos
     private String mensaje = "Requerido";
+
+    //Variable que ayuda a crear una tabla en la base de datos
     private final static String EMPRESA = "Empresa";
 
 
@@ -76,6 +88,9 @@ public class EmpresaActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Método que lista las empresas, mapeando los objetos desde la base de datos
+     */
     private void listarDatosEmpresa() {
         databaseReference.child(EMPRESA).addValueEventListener(new ValueEventListener() {
             @Override
@@ -98,6 +113,9 @@ public class EmpresaActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Inicializa la base de datos
+     */
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -116,12 +134,14 @@ public class EmpresaActivity extends AppCompatActivity {
     }
 
     /**
-     * Realiza la accion dependiendo del boton escogido en el menu superior
-     * @param item boton escogido
+     * Realiza la acción dependiendo del botón escogido en el menu superior
+     * @param item botón escogido
      * @return
      */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        //Obtención de datos provenientes de los campos de texto del formulario
         String nombre = nombreEmpresa.getText().toString();
         String direccion = direccionEmpresa.getText().toString();
         String telefono = telefonoEmpresa.getText().toString();
@@ -145,7 +165,6 @@ public class EmpresaActivity extends AppCompatActivity {
                     validationTelefono();
                 }else if(!validarEmail(email)){
                     emailEmpresa.setError("Email no válido");
-
                 }else if(contraseña.length()<6){
                     contraseñaEmpresa.setError("La contraseña debe tener almenos 6 caracteres");
                 }else if(telefono.length()<7){
@@ -194,6 +213,11 @@ public class EmpresaActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Valida el email de acuerdo a un patrón
+     * @param email email obtenido desde el campo
+     * @return false si no concuerda la cadena de texto con el patron establecido y true si concuerda
+     */
     private boolean validarEmail(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;
         return pattern.matcher(email).matches();
@@ -213,6 +237,7 @@ public class EmpresaActivity extends AppCompatActivity {
         contraseñaEmpresa.setText("");
         emailEmpresa.setText("");
     }
+
 
     private void validationNombre(){
         nombreEmpresa.setError(mensaje);

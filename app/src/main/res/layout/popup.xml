@@ -7,25 +7,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
     
-    
-    
     <ImageView
         android:id="@+id/imagenRuta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.166"/>
+        app:layout_constraintVertical_bias="0"/>
     <TextView
         android:id="@+id/texnumRuta"
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Numero ruta:"
         app:layout_constraintTop_toBottomOf="@+id/imagenRuta"
         android:textSize="24sp"
@@ -34,7 +32,7 @@
         android:id="@+id/numRuta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/texnumRuta"
         android:textSize="24sp"
         />
@@ -42,7 +40,7 @@
         android:id="@+id/texinicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/black"
         android:text="Inicio:"
         app:layout_constraintTop_toBottomOf="@+id/numRuta"
@@ -52,7 +50,7 @@
         android:id="@+id/inicio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/texinicio"
         android:textSize="24sp"
         />
@@ -61,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Llegada:"
         app:layout_constraintTop_toBottomOf="@+id/inicio"
         android:textSize="24sp"
@@ -70,7 +68,7 @@
         android:id="@+id/llegada"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/texllegada"
         android:textSize="24sp"
         />
@@ -79,7 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Puntos clave:"
         app:layout_constraintTop_toBottomOf="@+id/llegada"
         android:textSize="24sp"
@@ -88,7 +86,7 @@
         android:id="@+id/controles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/texControles"
         android:textSize="24sp"
         />
