@@ -18,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Clase que contiene los métodos requeridos para la visualización del
@@ -66,6 +67,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng villapilar = new LatLng(5.087557, -75.527373);
+        LatLng sultana = new LatLng(5.061053, -75.469550);
+        LatLng liborio = new LatLng(5.075687, -75.519110);
+        LatLng villamaria = new LatLng(5.047128, -75.514777);
+        LatLng veracruz = new LatLng(5.094939, -75.539474);
+        LatLng tablazo = new LatLng(5.020009, -75.540466);
+        LatLng cumbre = new LatLng(5.068574, -75.472216);
+        LatLng fatima = new LatLng(5.050482, -75.499001);
+
+
+        mMap.addMarker(new MarkerOptions().position(villapilar).title("Socobuses villapilar"));
+        mMap.addMarker(new MarkerOptions().position(sultana).title("Socobuses sultana"));
+        mMap.addMarker(new MarkerOptions().position(liborio).title("Serviturismo liborio"));
+        mMap.addMarker(new MarkerOptions().position(villamaria).title("Serviturismo villamaria"));
+        mMap.addMarker(new MarkerOptions().position(veracruz).title("Unitrans veracruz"));
+        mMap.addMarker(new MarkerOptions().position(tablazo).title("Unitrans tablazo"));
+        mMap.addMarker(new MarkerOptions().position(cumbre).title("Unitrans cumbre"));
+        mMap.addMarker(new MarkerOptions().position(fatima).title("Unitrans fatima"));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Consider calling
             //  ActivityCompat#requestPermissions
