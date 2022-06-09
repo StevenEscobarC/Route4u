@@ -39,13 +39,7 @@ import java.util.List;
  */
 public class BuscarRutaActivity extends AppCompatActivity {
 
-    //Variables de componentes visuales
-    private EditText filtrado;
-    private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
-    private TextView numRuta, inicio, llegada,controles;
-    private ImageView foto = null;
-    private Button popUp_Ok;
 
     //Variables ruta
     private List<Ruta> listRuta = new ArrayList<>();
@@ -53,8 +47,6 @@ public class BuscarRutaActivity extends AppCompatActivity {
     private ListView listViewRuta;
     private Ruta selectedRuta;
 
-    //Variables Firebase (base de datos)
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
 
     @Override
@@ -73,11 +65,11 @@ public class BuscarRutaActivity extends AppCompatActivity {
      * en alguna de la información mostrada en el listado de rutas
      */
     private TextWatcher filterTextWatcher = new TextWatcher() {
-        public void afterTextChanged(Editable s) {}
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void afterTextChanged(Editable s) {/*Es un metodo vacio puesto que no hay acciones al luego de cambiar el texto*/}
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {/*Es un metodo vacio puesto que no hay acciones al antes de cambiar el texto*/}
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (!s.toString().equals("")) {
-                List<Ruta> filteredRutas = new ArrayList<Ruta>();
+                List<Ruta> filteredRutas = new ArrayList<>();
                 for (int i=0; i<listRuta.size(); i++) {
                     if (listRuta.get(i).toString().toLowerCase().contains(s)) {
                         filteredRutas.add(listRuta.get(i));
@@ -98,31 +90,12 @@ public class BuscarRutaActivity extends AppCompatActivity {
      */
     private void initViews() {
         listViewRuta = findViewById(R.id.lv_rutas);
-        filtrado = findViewById(R.id.txtFiltrarRuta);
+        //Variables de componentes visuales
+        EditText filtrado = findViewById(R.id.txtFiltrarRuta);
         filtrado.addTextChangedListener(filterTextWatcher);
         listarDatosRuta();
 
-        /**
-         *Este evento esta pendiente a cualquier cambio que haya en el campo de texto
-         * para asi filtrar la ruta correspondiente
-         */
-        /*
-        filtrado.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                arrayAdapterRuta.filtrar(filtrado.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });*/
 
         /**
          * En el listener del listado de las rutas.
@@ -133,7 +106,7 @@ public class BuscarRutaActivity extends AppCompatActivity {
             selectedRuta = (Ruta) parent.getItemAtPosition(position);
 
 
-            //Inyeccion datos ruta en popUp
+            //Inyección datos ruta en popUp
             createNewRutaDialog(selectedRuta);
 
         });
@@ -145,7 +118,8 @@ public class BuscarRutaActivity extends AppCompatActivity {
      */
     private void initFirebase() {
         FirebaseApp.initializeApp(this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        //Variables Firebase (base de datos)
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
     }
 
@@ -169,7 +143,7 @@ public class BuscarRutaActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                /* Esta vacio puesto que no hay acciones en caso de cancelar la busqueda de datos*/
             }
         });
     }
@@ -184,19 +158,19 @@ public class BuscarRutaActivity extends AppCompatActivity {
     public void createNewRutaDialog(Ruta selectedRuta){
 
         //Inicialización de la vista emergente
-        dialogBuilder=new AlertDialog.Builder(this);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         final View rutaPopupView= getLayoutInflater().inflate(R.layout.popup,null);
 
         //Asignación de los campos de la ruta seleccionada
-        numRuta = rutaPopupView.findViewById(R.id.numRuta);
+        TextView numRuta = rutaPopupView.findViewById(R.id.numRuta);
         numRuta.setText(selectedRuta.getNumRuta());
-        inicio = rutaPopupView.findViewById(R.id.inicio);
+        TextView inicio = rutaPopupView.findViewById(R.id.inicio);
         inicio.setText(selectedRuta.getInicio());
-        llegada = rutaPopupView.findViewById(R.id.llegada);
+        TextView llegada = rutaPopupView.findViewById(R.id.llegada);
         llegada.setText(selectedRuta.getLlegada());
-        controles = rutaPopupView.findViewById(R.id.controles);
+        TextView controles = rutaPopupView.findViewById(R.id.controles);
         controles.setText(selectedRuta.getControles());
-        foto = rutaPopupView.findViewById(R.id.imagenRuta);
+        ImageView foto = rutaPopupView.findViewById(R.id.imagenRuta);
 
         //Decocificación de la imagen de Base64 hacia Bitmap
         byte[] data = Base64.decode(selectedRuta.getImagen(), Base64.DEFAULT);
@@ -206,19 +180,14 @@ public class BuscarRutaActivity extends AppCompatActivity {
         foto.setImageBitmap(bitmap);
 
         //Creación de los componentes de la vista emergente
-        popUp_Ok=(Button) rutaPopupView.findViewById(R.id.btnOk);
+        Button popUpOk = (Button) rutaPopupView.findViewById(R.id.btnOk);
         dialogBuilder.setView(rutaPopupView);
-        dialog=dialogBuilder.create();
+        dialog= dialogBuilder.create();
         dialog.show();
 
         /**
          * Cierra la ventana emergente
          */
-        popUp_Ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
+        popUpOk.setOnClickListener(view -> dialog.dismiss());
     }
 }
